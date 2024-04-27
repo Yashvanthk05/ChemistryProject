@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VChem</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://3Dmol.org/build/3Dmol-min.js"></script>   <!-- Include 3Dmol.js -->
+</head>
+<body>
+    <div class="navbar">
+        <h1>VChem</h1>
+        <h2>3D Model Viewer of Compounds</h2>
+        <h2>Created by Yashvanth Karunakaran(23BLC1114)</h2>
+    </div>
+    <form>
+        <label for="compound">Enter Compound Name or Formula:</label>
+        <input type="text" id="compound" name="compound" placeholder="e.g., Aspirin, Chlorophyll">
+        <button type="button" onclick="display3DModel()">Display 3D Model</button>
+    </form>
+
+    <div id="details">
+        <h2>Compound Details</h2>
+        <p id="compound-name"></p>
+        <p id="chemical-formula"></p>
+        <p id="desc"></p>
+    </div>
+
+    <div id="display"></div>
+
+    <script>
+        function display3DModel() {
+            const compound = document.getElementById("compound").value;
+            const display = document.getElementById("display");
+            const compoundName = document.getElementById("compound-name");
+            const chemicalFormula = document.getElementById("chemical-formula");
+            const descript= document.getElementById("desc");
+
+            fetch('/generate_3d', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ compound }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Display compound name and formula
+                    compoundName.innerText = `Compound Name: ${data.name}`;
+                    chemicalFormula.innerText = `Chemical Formula: ${data.formula}`;
+                    descript.innerText= `Description: ${data.description}`;
+
+                    // Create 3D viewer with specific styles
+                    const viewer = $3Dmol.createViewer(display, { backgroundColor: '#000000' });
+                    viewer.addModel(data.model, "sdf");
+                    viewer.setStyle({}, { stick: { color: 'gray' } });
+                    viewer.setStyle({ element: 'C' }, { sphere: { color: 'black' } });
+                    viewer.setStyle({ element: 'H' }, { sphere: { color: 'white' } });
+                    viewer.setStyle({ bondOrder: 2 }, { stick: { color: 'red' } });  // Double bonds const atoms = viewer.getModel().selectedAtoms({});
+                    viewer.zoomTo();
+                    viewer.render();
+                } else {
+                    display.innerText = `Error: ${data.message}`;
+                }
+            })
+            .catch(error => {
+                display.innerText = `Error: ${error}`;
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #000000;
+    color: white;
+}
+body {
+    font-family: Arial, sans-serif;
+}
+.navbar {
+    background: linear-gradient(to right, #bf4df8, #440080);  /* Gradient from left to right */
+    padding: 7px;        /* Padding for spacing */
+    text-align: center;   /* Center-align the text */
+    color: rgb(0, 0, 0);         /* Text color for contrast */
+    font-size: 14px;      /* Font size for readability */
+    border-radius: 10px;
+}
+h1 {
+    background-color: transparent;
+    text-align: center;
+}
+h2{
+    background-color: transparent;
+    text-align: center;
+}
+
+form {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#details {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#display {
+    position: absolute;  /* Positioning is absolute within the parent element */
+    bottom: 0;           /* Align to the bottom of the page */
+    width: 100%;         /* Full width */
+    height: 450px;       /* Adjust height as needed */
+    background-color: #000000;  /* Light gray background for contrast */
+    text-align: center; /* Center the text within the box */
+    padding: 10px;      /* Padding for content spacing */
+}
+
+input {
+    padding: 5px;
+    margin: 10px 0;
+}
+
+button {
+    padding: 5px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
